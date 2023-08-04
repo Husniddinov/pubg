@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{% endblock %}  
+
+{% block content %}
+<h2 class="text-center">
+    {{post.title}}
+</h2>
+<div class="text">
+    <h3>Muallif: " {{post.author}} "</h3>
+    <h3>Yuklangan sana: {{post.date}} </h3>
+</div>
+<hr>
+{% if post.video.url != null %}
+<video controls autoplay >
+    <source src="{{post.video.url}}">
+</video>
+{% endif %}
+<div class="container">
+    <h2>Tasodifiy videolar</h2>
+
+    <div class="">
+      
+        <div class="col-md-4">
+            <div class="card">
+                {% if post.image.url != null %}
+                <img src="{{ post.image.url }}" class="card-img-top" alt="{{post.title}}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{post.title}}</h5>
+                    <p class="card-text">{{post.content}}</p>
+                    
+                </div>
+            </div>
+        </div>
+        
+        
+               {% csrf_token %}
+       
+
+</div>
+<div class="col-md-2 text-right">
+    <p>
+        <a href="" data-togal="modal" data-target="#views"> <i class="fa fa-eye" aria-hidden="true">
+            <b>{{post.view_set.count}}</b>
+        </i> </a>
+    </p>
+    <div style="display: flex;">
+        <div style="width: 50%; border-bottom: 1px solid green;">
+            <div class="text-left">
+                <button id="like" data-url="{% url 'like' post.id %}" style="background: none; border: 0; padding: 0;">
+                <i class="fa-solid fa-thumbs-up"></i>
+            </button>
+            </div>
+            <div id="likes">
+                <div id="likes_count">
+                    {{post.like_set.count}}
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+</div>
+{% csrf_token %}
+<div style="width: 50%; border-bottom: 1px solid red;">
+    <div>
+        <div id="dislikes">
+            <div id="dislikes_count">
+                {{post.dislike_set.count}}
+            </div>
+        </div>
+    </div>
+    <button id="like" data-url="{% url 'like' post.id %}" style="background: none; border: 0; padding: 0;">
+        <i class="fa-solid fa-thumbs-down"></i>
+    </button>
+</div>
+
+{% for comment in post.comment_set.all %}
+<h4>
+    {% if comment.author.first_name != null %}
+    {{comment.author.first_name}} {{ comment.author.last_name }}
+    {% endif %}
+    {{comment.author.username}}
+</h4>
+<p>
+    {{comment.text}}
+</p>
+<div class="row">
+    
+    <p class="text-right col-md-10">{{comment.date|timesince}} Oldin</p>
+</div>
+
+{% endfor %}
+
+{% endblock %}

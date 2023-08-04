@@ -1,0 +1,12 @@
+<form method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
+    {% if form.errors %}
+  <p>Login yoki parol xato</p>
+    {% endif %}
+
+{{ form.username.label_tag }}
+{{ form.username }}
+{{ form.password.label_tag }}
+{{ form.password }}
+<input type="submit" value="login" />
+</form>

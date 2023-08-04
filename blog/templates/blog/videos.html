@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Videolar
+{% endblock %}
+
+{% block content %}
+
+
+
+
+
+<hr>
+<!-- card start -->
+
+<div class="container">
+  <div class="row">
+      {% for post in posts %}
+      <div class="col-md-4">
+          <div class="card">
+              {% if post.image.url != null %}
+              <img src="{{ post.image.url }}" class="card-img-top" alt="{{post.title}}">
+              {% endif %}
+              <div class="card-body">
+                  <h5 class="card-title">{{post.title}}</h5>
+                  <p class="card-text">{{post.content}}</p>
+                  <a href="{% url 'video' post.id %}" class="btn btn-primary">videoni ko'rish</a>
+                  
+              </div>
+          </div>
+      </div>
+      {% empty %}
+      <h2 class="text-center">Yangiliklar kiritilmagan</h2>
+      {% endfor %}
+  </div>
+</div>
+
+<!-- card end -->
+{% endblock %}
